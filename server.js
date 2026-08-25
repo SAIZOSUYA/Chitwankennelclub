@@ -34,8 +34,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Serve static directories
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(__dirname));
+app.use('/styles', express.static(path.join(__dirname, 'styles')));
+app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/videos', express.static(path.join(__dirname, 'videos')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 /* ==========================================
  * 1. PUBLIC MEDIA & CONTENT ENDPOINTS
