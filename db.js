@@ -4,8 +4,9 @@ const fs = require('fs');
 const bcrypt = require('bcryptjs');
 
 // Ensure data & uploads directories exist
-const dataDir = path.join(__dirname, 'data');
-const uploadsDir = path.join(__dirname, 'uploads');
+const isVercel = process.env.VERCEL || process.env.NOW_BUILDER;
+const dataDir = isVercel ? '/tmp' : path.join(__dirname, 'data');
+const uploadsDir = isVercel ? '/tmp' : path.join(__dirname, 'uploads');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 

@@ -112,7 +112,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Start Express Server
-app.listen(PORT, () => {
-  console.log(`🐾 Chitwan Kennel Club Server running live at http://localhost:${PORT}`);
-});
+// Start Express Server locally or export for Vercel
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🐾 Chitwan Kennel Club Server running live at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
