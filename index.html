@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chitwan Kennel Club | Premier Pet Store, Kennel & Vet Care in Bharatpur</title>
+  <meta name="description" content="Chitwan Kennel Club is Bharatpur's leading pet store, ethical dog breeding kennel, and veterinary care center located at Gautam Chowk, Bharatpur, Nepal. Healthy puppies, vaccination, surgery & pet supplies.">
+  <meta name="keywords" content="Chitwan Kennel Club, Pet Store Bharatpur, Dog Kennel Nepal, Rottweiler Puppies Nepal, German Shepherd Chitwan, Vet Clinic Gautam Chowk">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+  <!-- Background Floating Pet Graphics Layer -->
+  <div class="bg-pet-graphics-container">
+    <div class="bg-pet-graphic pet-paw-1"><i data-lucide="paw-print"></i></div>
+    <div class="bg-pet-graphic pet-bone-1"><i data-lucide="bone"></i></div>
+    <div class="bg-pet-graphic pet-dog-1"><i data-lucide="dog"></i></div>
+    <div class="bg-pet-graphic pet-cat-1"><i data-lucide="cat"></i></div>
+    <div class="bg-pet-graphic pet-paw-2"><i data-lucide="paw-print"></i></div>
+    <div class="bg-pet-graphic pet-heart-1"><i data-lucide="heart"></i></div>
+    <div class="bg-pet-graphic pet-ball-1"><i data-lucide="circle-dot"></i></div>
+    <div class="bg-pet-graphic pet-fish-1"><i data-lucide="fish"></i></div>
+    <div class="bg-pet-graphic pet-crown-1"><i data-lucide="crown"></i></div>
+    <div class="bg-pet-graphic pet-paw-3"><i data-lucide="paw-print"></i></div>
+    <div class="bg-pet-graphic pet-home-1"><i data-lucide="home"></i></div>
+    <div class="bg-pet-graphic pet-paw-4"><i data-lucide="paw-print"></i></div>
+  </div>
+
+  <!-- Custom Paw Print Particle Canvas Overlay -->
+  <canvas id="pawCanvas"></canvas>
+
+  <!-- Animated Preloader -->
+  <div id="preloader">
+    <div class="paw-loader">
+      <i data-lucide="paw-print" class="paw-step"></i>
+      <i data-lucide="paw-print" class="paw-step"></i>
+      <i data-lucide="paw-print" class="paw-step"></i>
+      <i data-lucide="paw-print" class="paw-step"></i>
+    </div>
+    <div class="loader-text">Welcoming you to Chitwan Kennel Club... 🐾</div>
+  </div>
+
+  <!-- Glassmorphism Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <a href="#hero" class="nav-brand">
+      <img src="images/official_logo.png" alt="Chitwan Kennel Club Official Logo" class="nav-official-logo">
+      <div class="nav-title">
+        Chitwan Kennel Club
+        <span>Gautam Chowk, Bharatpur</span>
+      </div>
+    </a>
+
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#hero" class="nav-link active">Home</a></li>
+      <li><a href="#facebook-feed" class="nav-link">FB Reels</a></li>
+      <li><a href="#puppies" class="nav-link">Puppies</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="tel:+9779804183714" class="phone-quick-btn">
+        <i data-lucide="phone-call"></i>
+        <span>+977 980-4183714</span>
+      </a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i data-lucide="award"></i> Nepal's Premier Pet Paradise
+          </div>
+          <h1 class="hero-title">
+            Your Trusted Companion in <span>Pet Care</span>
+          </h1>
+          <p class="hero-description">
+            Welcome to Chitwan Kennel Club in Gautam Chowk, Bharatpur. We provide healthy, ethically bred puppies, comprehensive veterinary services, and premium pet supplies with unconditional love.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="#puppies" class="btn btn-primary">
+              View Available Puppies <i data-lucide="paw-print"></i>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              Book a Visit / Contact <i data-lucide="calendar"></i>
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat-card">
+              <span class="hero-stat-number">1,200+</span>
+              <span class="hero-stat-label">Happy Pets Adopted</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="hero-stat-number">15+ Yrs</span>
+              <span class="hero-stat-label">Trusted Experience</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="hero-stat-number">24 / 7</span>
+              <span class="hero-stat-label">Emergency Care</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="hero-img-wrapper" data-admin-media-id="hero-img">
+            <img src="images/hero_puppies.jpg" alt="Chitwan Kennel Club Puppies Showcase" id="heroImg">
+          </div>
+
+          <!-- Floating Interactive Stat Badges -->
+          <div class="hero-floating-card card-top-right">
+            <div class="floating-icon">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <div class="floating-text">
+              <h5>100% Vaccinated</h5>
+              <p>Health Guaranteed Puppies</p>
+            </div>
+          </div>
+
+          <div class="hero-floating-card card-bottom-left">
+            <div class="floating-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="floating-text">
+              <h5>Gautam Chowk</h5>
+              <p>Bharatpur, Chitwan, Nepal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Facebook Reels & Media Feed Section (Right After Home) -->
+  <section class="fb-reels-section" id="facebook-feed">
+    <div class="container">
+      <div class="section-header">
+        <div class="fb-header-badge">
+          <i data-lucide="video"></i> Official Facebook Media & Reels Feed
+        </div>
+        <h2 class="section-title" style="color: #FFF;">Direct from @chitwankennelclubofficial</h2>
+        <p class="section-subtitle" style="color: rgba(255,255,255,0.85);">Watch our daily puppy training, pet hostel playtime, and grooming sessions directly from our Facebook & TikTok pages!</p>
+      </div>
+
+      <div class="fb-reels-grid">
+        <!-- Reel 1 -->
+        <div class="reel-card" data-admin-media-id="reel-img-1">
+          <img src="images/facebook_reel_1.jpg" alt="Rottweiler Obedience Training Reel" class="reel-video-bg">
+          <div class="reel-overlay">
+            <div class="reel-top-bar">
+              <div class="reel-author">
+                <img src="images/pet_mascot.jpg" alt="Chitwan Kennel Club" class="reel-avatar">
+                <div class="reel-author-name">
+                  Chitwan Kennel Club
+                  <span>@chitwankennelclubofficial</span>
+                </div>
+              </div>
+              <span class="reel-badge-live">LIVE REEL</span>
+            </div>
+
+            <div class="reel-bottom">
+              <div class="reel-caption-box">
+                <p class="reel-caption">Brave Rottweiler puppy mastering the "SIT & STAY" obedience command at our Srijana Chowk kennel park! 🐾❤️</p>
+                <div class="reel-hashtags">#RottweilerPuppy #DogTrainingNepal #ChitwanKennelClub</div>
+              </div>
+
+              <div class="reel-actions">
+                <button class="reel-action-btn"><i data-lucide="heart" style="color:#FF4B4B;"></i></button>
+                <span class="reel-action-count">2.4K</span>
+                <button class="reel-action-btn"><i data-lucide="message-circle"></i></button>
+                <span class="reel-action-count">184</span>
+                <button class="reel-action-btn"><i data-lucide="share-2"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 3 -->
+        <div class="reel-card" data-admin-media-id="reel-img-2">
+          <img src="images/facebook_reel_3.jpg" alt="German Shepherd Park Playtime Reel" class="reel-video-bg">
+          <div class="reel-overlay">
+            <div class="reel-top-bar">
+              <div class="reel-author">
+                <img src="images/pet_mascot.jpg" alt="Chitwan Kennel Club" class="reel-avatar">
+                <div class="reel-author-name">
+                  Chitwan Kennel Club
+                  <span>@chitwankennelclubofficial</span>
+                </div>
+              </div>
+              <span class="reel-badge-live">POPULAR</span>
+            </div>
+
+            <div class="reel-bottom">
+              <div class="reel-caption-box">
+                <p class="reel-caption">Catching the frisbee in mid-air! High agility German Shepherd training in Chitwan 🥏⚡</p>
+                <div class="reel-hashtags">#GermanShepherd #HighAgility #PetHostelChitwan</div>
+              </div>
+
+              <div class="reel-actions">
+                <button class="reel-action-btn"><i data-lucide="heart" style="color:#FF4B4B;"></i></button>
+                <span class="reel-action-count">4.1K</span>
+                <button class="reel-action-btn"><i data-lucide="message-circle"></i></button>
+                <span class="reel-action-count">256</span>
+                <button class="reel-action-btn"><i data-lucide="share-2"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 4: Popular TikTok Video -->
+        <div class="reel-card" style="border-color: #00F2FE;" data-admin-media-id="reel-video-1">
+          <video src="videos/viral_tiktok.mp4" autoplay loop muted playsinline class="reel-video-bg" id="viralTiktokVideo"></video>
+          <div class="reel-overlay">
+            <div class="reel-top-bar">
+              <div class="reel-author">
+                <img src="images/pet_mascot.jpg" alt="Chitwan Kennel Club TikTok" class="reel-avatar" style="border-color: #00F2FE;">
+                <div class="reel-author-name">
+                  Chitwan Kennel Club
+                  <span style="color: #00F2FE;">@chitwan_kennel_club</span>
+                </div>
+              </div>
+              <span class="reel-badge-live" style="background: #00F2FE; color: #000;">VIRAL TIKTOK LIVE</span>
+            </div>
+
+            <div class="reel-bottom">
+              <div class="reel-caption-box">
+                <p class="reel-caption">🔥 Official Viral TikTok Clip! Playing & daycare moments at Chitwan Kennel Club 🐕❤️</p>
+                <div class="reel-hashtags" style="color: #00F2FE;">#TikTokViral #ChitwanKennel #PetCareBharatpur</div>
+              </div>
+
+              <div class="reel-actions">
+                <button class="reel-action-btn" onclick="toggleVideoMute('viralTiktokVideo', this)" style="background: #00F2FE; color: #000;" title="Unmute Sound"><i data-lucide="volume-2"></i></button>
+                <span class="reel-action-count">Sound</span>
+                <a href="https://www.tiktok.com/@chitwan_kennel_club/video/7503950973644066066" target="_blank" rel="noopener noreferrer" class="reel-action-btn" style="background: rgba(255,255,255,0.25); color: #FFF;" title="Open TikTok App"><i data-lucide="external-link"></i></a>
+                <span class="reel-action-count">TikTok</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb-cta-box">
+        <h3>Connect with Us Across Social Media</h3>
+        <p>Follow <strong>@chitwankennelclubofficial</strong>, <strong>@chitwan_kennel_club</strong> on TikTok (12.6K+ Followers & 181K+ Views), and Instagram for daily puppy updates!</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.25rem;">
+          <a href="https://www.facebook.com/chitwankennelclubofficial" target="_blank" rel="noopener noreferrer" class="btn-facebook">
+            <i data-lucide="facebook"></i> Facebook Page (2.5K+)
+          </a>
+          <a href="https://www.tiktok.com/@chitwan_kennel_club" target="_blank" rel="noopener noreferrer" class="btn-facebook" style="background: #000; color: #FFF;">
+            <i data-lucide="video"></i> TikTok (12.6K+ Followers)
+          </a>
+          <a href="https://www.instagram.com/chitwankennel" target="_blank" rel="noopener noreferrer" class="btn-facebook" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366); color: #FFF;">
+            <i data-lucide="camera"></i> Instagram (@chitwankennel)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Puppies Available Section -->
+  <section class="puppies-section" id="puppies">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Find Your Companion</span>
+        <h2 class="section-title">Featured Puppies Available</h2>
+        <p class="section-subtitle">Browse through our current litter of healthy, affectionate, and certified purebred puppies ready for their forever homes.</p>
+      </div>
+
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">All Breeds</button>
+        <button class="filter-btn" data-filter="guard">Guard & Working</button>
+        <button class="filter-btn" data-filter="family">Family Friendly</button>
+        <button class="filter-btn" data-filter="large">Large Breeds</button>
+        <button class="filter-btn" data-filter="medium">Medium / Small</button>
+      </div>
+
+      <div class="puppies-grid" id="puppiesGrid">
+        <!-- Card 1: Rottweiler -->
+        <div class="puppy-card" data-category="guard large" data-puppy-id="1">
+          <div class="puppy-card-img-wrap" data-admin-media-id="puppy-img-1">
+            <img src="images/rottweiler_puppy.jpg" alt="Purebred Rottweiler Puppy">
+            <span class="puppy-tag">Champion Bloodline</span>
+            <span class="puppy-age-badge">8 Weeks Old</span>
+          </div>
+          <div class="puppy-card-body">
+            <div class="puppy-header-row">
+              <h3 class="puppy-name">Rottweiler</h3>
+              <span class="puppy-gender">Male & Female</span>
+            </div>
+            <p class="puppy-desc">Loyal, highly trainable, powerful guard dog with confident temperament.</p>
+            <div class="puppy-specs">
+              <span class="spec-pill">Dewormed</span>
+              <span class="spec-pill">1st Vet Shot</span>
+              <span class="spec-pill">KCI Registered</span>
+            </div>
+            <div class="puppy-footer">
+              <span class="puppy-status">Available in Kennel</span>
+              <button class="inquire-btn" onclick="openInquiryModal('Rottweiler')">Inquire Now 🐾</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: German Shepherd -->
+        <div class="puppy-card" data-category="guard large" data-puppy-id="2">
+          <div class="puppy-card-img-wrap" data-admin-media-id="puppy-img-2">
+            <img src="images/german_shepherd_puppy.jpg" alt="German Shepherd Puppy">
+            <span class="puppy-tag">Heavy Bone Line</span>
+            <span class="puppy-age-badge">7 Weeks Old</span>
+          </div>
+          <div class="puppy-card-body">
+            <div class="puppy-header-row">
+              <h3 class="puppy-name">German Shepherd</h3>
+              <span class="puppy-gender">Male & Female</span>
+            </div>
+            <p class="puppy-desc">Intelligent, protective, and agile companion ideal for families and security.</p>
+            <div class="puppy-specs">
+              <span class="spec-pill">Parvo Vaccinated</span>
+              <span class="spec-pill">Microchipped</span>
+              <span class="spec-pill">Show Line</span>
+            </div>
+            <div class="puppy-footer">
+              <span class="puppy-status">Available in Kennel</span>
+              <button class="inquire-btn" onclick="openInquiryModal('German Shepherd')">Inquire Now 🐾</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Golden Retriever -->
+        <div class="puppy-card" data-category="family large" data-puppy-id="3">
+          <div class="puppy-card-img-wrap" data-admin-media-id="puppy-img-3">
+            <img src="images/golden_retriever_puppy.jpg" alt="Golden Retriever Puppy">
+            <span class="puppy-tag">Super Gentle</span>
+            <span class="puppy-age-badge">9 Weeks Old</span>
+          </div>
+          <div class="puppy-card-body">
+            <div class="puppy-header-row">
+              <h3 class="puppy-name">Golden Retriever</h3>
+              <span class="puppy-gender">Female</span>
+            </div>
+            <p class="puppy-desc">Extremely friendly, gentle with kids, plush cream-golden coat.</p>
+            <div class="puppy-specs">
+              <span class="spec-pill">Fully Vaccinated</span>
+              <span class="spec-pill">Vet Certified</span>
+              <span class="spec-pill">Playful</span>
+            </div>
+            <div class="puppy-footer">
+              <span class="puppy-status">Available in Kennel</span>
+              <button class="inquire-btn" onclick="openInquiryModal('Golden Retriever')">Inquire Now 🐾</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Beagle -->
+        <div class="puppy-card" data-category="family medium" data-puppy-id="4">
+          <div class="puppy-card-img-wrap" data-admin-media-id="puppy-img-4">
+            <img src="images/beagle_puppy.jpg" alt="Tricolor Beagle Puppy">
+            <span class="puppy-tag">Compact & Energetic</span>
+            <span class="puppy-age-badge">8 Weeks Old</span>
+          </div>
+          <div class="puppy-card-body">
+            <div class="puppy-header-row">
+              <h3 class="puppy-name">Beagle (Tricolor)</h3>
+              <span class="puppy-gender">Male</span>
+            </div>
+            <p class="puppy-desc">Curious scent hound, compact size, fantastic for apartment or home living.</p>
+            <div class="puppy-specs">
+              <span class="spec-pill">Dewormed</span>
+              <span class="spec-pill">Active</span>
+              <span class="spec-pill">Socialized</span>
+            </div>
+            <div class="puppy-footer">
+              <span class="puppy-status">Available in Kennel</span>
+              <button class="inquire-btn" onclick="openInquiryModal('Beagle')">Inquire Now 🐾</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Chocolate Labrador -->
+        <div class="puppy-card" data-category="family large" data-puppy-id="5">
+          <div class="puppy-card-img-wrap" data-admin-media-id="puppy-img-5">
+            <img src="images/labrador_puppy.jpg" alt="Chocolate Labrador Puppy">
+            <span class="puppy-tag">Rare Chocolate Coat</span>
+            <span class="puppy-age-badge">7 Weeks Old</span>
+          </div>
+          <div class="puppy-card-body">
+            <div class="puppy-header-row">
+              <h3 class="puppy-name">Labrador Retriever</h3>
+              <span class="puppy-gender">Male & Female</span>
+            </div>
+            <p class="puppy-desc">High energy, eager to please, loving family dog with athletic build.</p>
+            <div class="puppy-specs">
+              <span class="spec-pill">First Vaccination</span>
+              <span class="spec-pill">Pedigree Parent</span>
+            </div>
+            <div class="puppy-footer">
+              <span class="puppy-status">Available in Kennel</span>
+              <button class="inquire-btn" onclick="openInquiryModal('Labrador Retriever')">Inquire Now 🐾</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Siberian Husky -->
+        <div class="puppy-card" data-category="guard large" data-puppy-id="6">
+          <div class="puppy-card-img-wrap" data-admin-media-id="puppy-img-6">
+            <img src="images/husky_puppy.jpg" alt="Siberian Husky Puppy">
+            <span class="puppy-tag">Blue Eyes</span>
+            <span class="puppy-age-badge">9 Weeks Old</span>
+          </div>
+          <div class="puppy-card-body">
+            <div class="puppy-header-row">
+              <h3 class="puppy-name">Siberian Husky</h3>
+              <span class="puppy-gender">Female</span>
+            </div>
+            <p class="puppy-desc">Stunning thick double coat, striking blue eyes, and vocal charismatic personality.</p>
+            <div class="puppy-specs">
+              <span class="spec-pill">Vaccinated</span>
+              <span class="spec-pill">Dewormed</span>
+              <span class="spec-pill">Show Quality</span>
+            </div>
+            <div class="puppy-footer">
+              <span class="puppy-status">Available in Kennel</span>
+              <button class="inquire-btn" onclick="openInquiryModal('Siberian Husky')">Inquire Now 🐾</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section" id="services">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 1.75rem;">
+        <span class="section-tag">Comprehensive Pet Care</span>
+        <h2 class="section-title">Our Veterinary & Kennel Services</h2>
+        <p class="section-subtitle">Everything your pet needs under one roof — professional vet care, boarding, and premium supplies.</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card">
+          <div class="service-card-header">
+            <div class="service-icon-box">
+              <i data-lucide="syringe"></i>
+            </div>
+            <h3>Vaccination & Deworming</h3>
+          </div>
+          <p>Scheduled DHPPiL, Rabies & Parvo shots with broad-spectrum deworming.</p>
+          <button class="service-card-btn" onclick="openServiceModal('Vaccination & Deworming')">
+            Book Appointment <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service-card">
+          <div class="service-card-header">
+            <div class="service-icon-box">
+              <i data-lucide="stethoscope"></i>
+            </div>
+            <h3>Veterinary Surgery</h3>
+          </div>
+          <p>Sterile minor & major surgical procedures by experienced vet surgeons.</p>
+          <button class="service-card-btn" onclick="openServiceModal('Veterinary Surgery')">
+            Book Appointment <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="service-card">
+          <div class="service-card-header">
+            <div class="service-icon-box">
+              <i data-lucide="activity"></i>
+            </div>
+            <h3>Digital X-Ray & Diagnostics</h3>
+          </div>
+          <p>Digital radiography & rapid blood testing for accurate health diagnosis.</p>
+          <button class="service-card-btn" onclick="openServiceModal('Digital X-Ray & Diagnostics')">
+            Book Appointment <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="service-card">
+          <div class="service-card-header">
+            <div class="service-icon-box">
+              <i data-lucide="hotel"></i>
+            </div>
+            <h3>Kennel Boarding</h3>
+          </div>
+          <p>Climate-controlled pet boarding suites with 24/7 supervision & playtime.</p>
+          <button class="service-card-btn" onclick="openServiceModal('In-House Kennel Boarding')">
+            Book Appointment <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="service-card">
+          <div class="service-card-header">
+            <div class="service-icon-box">
+              <i data-lucide="award"></i>
+            </div>
+            <h3>Obedience & Training</h3>
+          </div>
+          <p>Professional dog training for house manners, leash walking & protection.</p>
+          <button class="service-card-btn" onclick="openServiceModal('Dog Training')">
+            Book Appointment <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="service-card">
+          <div class="service-card-header">
+            <div class="service-icon-box">
+              <i data-lucide="shopping-bag"></i>
+            </div>
+            <h3>Food & Supplements</h3>
+          </div>
+          <p>Royal Canin, Pedigree, calcium supplements, coat vitamins & pet supplies.</p>
+          <button class="service-card-btn" onclick="openServiceModal('Dog Food & Supplies Inquiry')">
+            Inquire Supplies <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Moments of Joy</span>
+        <h2 class="section-title">Happy Pets & Kennel Gallery</h2>
+        <p class="section-subtitle">Glimpse into life at Chitwan Kennel Club and our happy adopted family pets around Nepal.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" data-admin-media-id="gallery-img-1">
+          <img src="images/hero_puppies.jpg" alt="Puppies playing together">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">
+              <h4>Playtime at Kennel</h4>
+              <p>Bharatpur Facility</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-admin-media-id="gallery-img-2">
+          <img src="images/rottweiler_puppy.jpg" alt="Rottweiler puppy">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">
+              <h4>Champion Rottweiler Litter</h4>
+              <p>Adoption Day</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-admin-media-id="gallery-img-3">
+          <img src="images/vet_care.jpg" alt="Veterinary checkup">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">
+              <h4>Routine Vet Checkup</h4>
+              <p>Health First</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" data-admin-media-id="gallery-img-4">
+          <img src="images/golden_retriever_puppy.jpg" alt="Golden Retriever">
+          <div class="gallery-overlay">
+            <div class="gallery-caption">
+              <h4>Golden Retriever Joy</h4>
+              <p>Happy Client in Narayangarh</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us & Social Media Reels Section (Before Reviews) -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-container" data-admin-media-id="about-img">
+          <img src="images/about_kennel.jpg" alt="Chitwan Kennel Club Facility in Bharatpur" class="about-img-main">
+          <div class="about-badge-location">
+            <h4>Located in Heart of Chitwan</h4>
+            <p>Gautam Chowk, Bharatpur-10, Chitwan, Nepal</p>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <span class="section-tag">About Chitwan Kennel Club</span>
+          <h2 class="section-title">Seeing Happy Pets & Smiling Families Inspires Us</h2>
+          <p class="hero-description" style="font-style: italic; border-left: 3px solid var(--clr-terracotta); padding-left: 1rem; color: var(--clr-chocolate); font-weight: 600;">
+            "We follow our safety measures as well as our companion. Seeing happy pets and smiling families is what inspires us everyday in Chitwan."
+          </p>
+
+
+          <div class="about-features">
+            <div class="feature-box">
+              <div class="feature-icon-badge hostel">
+                <i data-lucide="home"></i>
+              </div>
+              <h4>Pet Hostel Facility</h4>
+              <p>CHITWAN KENNEL CLUB मा अब PET HOSTEL पनि! 24/7 safe boarding & care.</p>
+            </div>
+            <div class="feature-box">
+              <div class="feature-icon-badge pedigree">
+                <i data-lucide="award"></i>
+              </div>
+              <h4>Ethical Pedigree</h4>
+              <p>Heavy bone line GSDs, Rottweilers & Golden Retrievers with genetic guarantees.</p>
+            </div>
+            <div class="feature-box">
+              <div class="feature-icon-badge vet">
+                <i data-lucide="stethoscope"></i>
+              </div>
+              <h4>In-House Vet Team</h4>
+              <p>Vaccinations, surgery, deworming & emergency medical treatment.</p>
+            </div>
+            <div class="feature-box">
+              <div class="feature-icon-badge cat">
+                <i data-lucide="cat"></i>
+              </div>
+              <h4>Feline & Cat Care</h4>
+              <p>Cat show organizer, cat grooming, kitten nutrition & routine care.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What Pet Owners Say</span>
+        <h2 class="section-title">Trusted Across Chitwan & Nepal</h2>
+        <p class="section-subtitle">Real feedback from pet lovers who brought home their beloved companions from us.</p>
+      </div>
+
+      <div class="testimonial-card-wrap">
+        <div class="testimonial-card" id="testimonialCard">
+          <div class="quote-icon">“</div>
+          <p class="testimonial-quote" id="testimonialText">
+            "I got my Rottweiler puppy from Chitwan Kennel Club 6 months ago. The puppy arrived healthy, fully vaccinated, and extremely well-socialized. Dr. Kamala and the team at Gautam Chowk are always available whenever I need advice!"
+          </p>
+          <div class="testimonial-user">
+            <div class="stars">★★★★★</div>
+            <h4 class="user-name" id="testimonialAuthor">Sujan Shrestha</h4>
+            <span class="user-location" id="testimonialLoc">Bharatpur-10, Chitwan</span>
+          </div>
+        </div>
+
+        <div class="carousel-nav">
+          <button class="carousel-btn" id="prevTestimonial" aria-label="Previous review">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <button class="carousel-btn" id="nextTestimonial" aria-label="Next review">
+            <i data-lucide="chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Location Section -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info-box">
+          <span class="section-tag contact-tag">Get in Touch</span>
+          <h2 class="section-title contact-title">Visit Chitwan Kennel Club</h2>
+
+          <div class="contact-info-item">
+            <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+            <div class="contact-details">
+              <h4>Our Kennel & Pet Store Locations</h4>
+              <p><strong>Main Kennel & Hostel:</strong> Srijana Chowk, Bharatpur-07, Chitwan, Nepal<br>
+              <strong>Vet Clinic Branch:</strong> Gautam Chowk, Bharatpur-10, Chitwan, Nepal</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon"><i data-lucide="phone"></i></div>
+            <div class="contact-details">
+              <h4>Official Phone & WhatsApp</h4>
+              <p><strong>+977 980-4183714</strong> (Primary Hotline & Facebook Support)<br>+977 985-5061234 / +977 56-520123</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon"><i data-lucide="clock"></i></div>
+            <div class="contact-details">
+              <h4>Opening Hours</h4>
+              <p>Shop & Visit: 6:00 AM – 9:00 PM Daily<br>Veterinary Emergency: 24/7 Always Open</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon"><i data-lucide="mail"></i></div>
+            <div class="contact-details">
+              <h4>Email Address</h4>
+              <p>roshanpoudel203@gmail.com / info@chitwankennelclub.com</p>
+            </div>
+          </div>
+
+          <!-- Embedded Map Frame -->
+          <div class="map-wrapper">
+            <iframe title="Bharatpur Gautam Chowk Map" src="https://maps.google.com/maps?q=Gautam%20Chowk,%20Bharatpur,%20Nepal&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- Contact Form Card -->
+        <div class="contact-form-card">
+          <h3 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 1.25rem; color: var(--clr-chocolate);">
+            Send Us a Message 🐾
+          </h3>
+          <form id="contactForm" onsubmit="handleContactSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Your Name</label>
+              <input type="text" id="contactName" class="form-control" placeholder="e.g. Anish Gurung" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contactPhone">Phone / WhatsApp Number</label>
+              <input type="tel" id="contactPhone" class="form-control" placeholder="e.g. 9845xxxxxx" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="inquiryType">Interested In</label>
+              <select id="inquiryType" class="form-control">
+                <option value="Puppy Adoption">Buying / Adopting a Puppy</option>
+                <option value="Veterinary Service">Veterinary Doctor Appointment</option>
+                <option value="Kennel Boarding">Dog Boarding Service</option>
+                <option value="Dog Training">Obedience Dog Training</option>
+                <option value="Pet Food & Supplies">Pet Supplies & Food</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contactMsg">Message / Specific Requirements</label>
+              <textarea id="contactMsg" class="form-control" placeholder="Tell us which breed or service you're looking for..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              Submit Inquiry <i data-lucide="send"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/official_logo.png" alt="Chitwan Kennel Club Official Logo" class="footer-official-logo">
+          <h3>Chitwan Kennel Club</h3>
+          <p>Nepal's most trusted home for healthy puppies, professional veterinary medicine, and quality pet care supplies.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#puppies">Available Puppies</a></li>
+            <li><a href="#services">Vet Services</a></li>
+            <li><a href="#gallery">Pet Gallery</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Popular Breeds</h4>
+          <ul class="footer-links">
+            <li><a href="#puppies">Rottweiler</a></li>
+            <li><a href="#puppies">German Shepherd</a></li>
+            <li><a href="#puppies">Golden Retriever</a></li>
+            <li><a href="#puppies">Tricolor Beagle</a></li>
+            <li><a href="#puppies">Labrador Retriever</a></li>
+          </ul>
+        </div>
+
+        <div class="newsletter-box">
+          <h4 class="footer-title">Pet Lovers Newsletter</h4>
+          <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">Subscribe for new litter announcements & vaccination tips!</p>
+          <div class="newsletter-input-group">
+            <input type="email" id="newsletterEmail" class="newsletter-input" placeholder="Your email address...">
+            <button class="newsletter-btn" onclick="handleNewsletterSubmit()">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Chitwan Kennel Club, Gautam Chowk, Bharatpur, Nepal. All Rights Reserved. Crafted with ❤️ for Pets.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Puppy Inquiry Modal -->
+  <div class="modal-backdrop" id="inquiryModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeInquiryModal()">&times;</button>
+      <h3 class="modal-title" id="modalBreedTitle">Inquire About Puppy</h3>
+      <p style="font-size: 0.9rem; color: var(--clr-muted); margin-bottom: 1.25rem;">
+        Fill out your details to request litter photos, parent pedigree details, and book a visit to our Gautam Chowk kennel.
+      </p>
+      <form onsubmit="handleModalSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Selected Breed</label>
+          <input type="text" id="modalSelectedBreed" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Full Name</label>
+          <input type="text" class="form-control" placeholder="e.g. Bikash Thapa" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" placeholder="e.g. 98550xxxxx" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          Request Litter Video & Specs 🐾
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Service Booking Modal -->
+  <div class="modal-backdrop" id="serviceModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeServiceModal()">&times;</button>
+      <h3 class="modal-title" id="modalServiceTitle">Book Service</h3>
+      <p style="font-size: 0.9rem; color: var(--clr-muted); margin-bottom: 1.25rem;">
+        Reserve your slot with our vet team at Chitwan Kennel Club, Bharatpur.
+      </p>
+      <form onsubmit="handleServiceModalSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Selected Service</label>
+          <input type="text" id="modalSelectedService" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Owner Name & Pet Name</label>
+          <input type="text" class="form-control" placeholder="e.g. Sita & Bruno" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Date & Time</label>
+          <input type="datetime-local" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          Confirm Booking Appointment 🗓️
+        </button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- Main JavaScript File -->
+  <script src="scripts/app.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
