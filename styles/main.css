@@ -29,7 +29,7 @@
   --glass-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.35);
 
   /* Fonts */
-  --font-heading: 'Fredoka', cursive, sans-serif;
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
 
   /* Transitions */
@@ -1903,16 +1903,22 @@ textarea.form-control {
     grid-template-columns: 1fr;
   }
 
-  .puppies-grid, .services-grid, .fb-reels-grid, .gallery-grid {
-    grid-template-columns: 1fr;
+  .puppies-grid, .services-grid, .fb-reels-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .puppy-card-img-wrap {
-    height: 220px;
+    height: 240px;
   }
 
   .contact-info-box, .contact-form-card, .testimonial-card {
-    padding: 1.5rem;
+    padding: 1.75rem;
     border-radius: 24px;
   }
 
@@ -1921,7 +1927,7 @@ textarea.form-control {
   }
 
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
 
@@ -1931,19 +1937,25 @@ textarea.form-control {
   }
 
   .floating-chat-btn {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     font-size: 1.35rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .hero-title {
-    font-size: 1.95rem;
+    font-size: 2rem;
+    line-height: 1.2;
   }
 
   .section-title {
     font-size: 1.75rem;
+  }
+
+  .puppies-grid, .services-grid, .fb-reels-grid, .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 
   .hero-stats {
@@ -1959,5 +1971,9 @@ textarea.form-control {
   .filter-btn {
     font-size: 0.82rem;
     padding: 0.45rem 0.95rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
   }
 }
