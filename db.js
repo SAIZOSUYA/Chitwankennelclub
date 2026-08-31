@@ -1,6 +1,25 @@
 const path = require('path');
 const fs = require('fs');
 
+// Load environment variables from .env if present
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  try {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    envContent.split(/\r?\n/).forEach(line => {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#')) {
+        const idx = trimmed.indexOf('=');
+        if (idx !== -1) {
+          const key = trimmed.slice(0, idx).trim();
+          const val = trimmed.slice(idx + 1).trim();
+          if (!process.env[key]) process.env[key] = val;
+        }
+      }
+    });
+  } catch (e) {}
+}
+
 let db = null;
 let useFallback = false;
 
@@ -61,12 +80,20 @@ const dbRun = (sql, params = []) => {
           message: params[5],
           status: 'New'
         });
+      } else if (sql.includes('media_overrides')) {
+        if (params && params.length >= 2) {
+          memoryMedia[params[0]] = { media_id: params[0], url: params[1], media_type: params[2] || 'image' };
+        }
       }
       return resolve({ lastID: Date.now(), changes: 1 });
     }
     db.run(sql, params, function (err) {
-      if (err) resolve({ lastID: Date.now(), changes: 1 });
-      else resolve({ lastID: this.lastID, changes: this.changes });
+      if (err) {
+        console.error('dbRun error:', err.message, 'SQL:', sql);
+        reject(err);
+      } else {
+        resolve({ lastID: this.lastID, changes: this.changes });
+      }
     });
   });
 };
@@ -74,7 +101,12 @@ const dbRun = (sql, params = []) => {
 const dbGet = (sql, params = []) => {
   return new Promise((resolve, reject) => {
     if (useFallback || !db) {
-      if (sql.includes('users')) return resolve({ id: 1, username: 'admin' });
+      if (sql.includes('users')) {
+        const adminUser = process.env.ADMIN_USERNAME || 'Kennelrosan';
+        const adminPassHash = process.env.ADMIN_PASSWORD_HASH || '$2a$10$mgwk3KHOcFBeIaIwHCou5uEgRdmZDGwt3NHsUtQ3y9aelapsCiCWu';
+        if (params && params[0] && params[0] !== adminUser) return resolve(null);
+        return resolve({ id: 1, username: adminUser, password_hash: adminPassHash });
+      }
       if (sql.includes('COUNT')) return resolve({ count: 6 });
       return resolve(null);
     }
@@ -90,7 +122,7 @@ const dbAll = (sql, params = []) => {
     if (useFallback || !db) {
       if (sql.includes('puppies')) return resolve(defaultPuppies);
       if (sql.includes('testimonials')) return resolve(defaultTestimonials);
-      if (sql.includes('media_overrides')) return resolve([]);
+      if (sql.includes('media_overrides')) return resolve(Object.values(memoryMedia));
       if (sql.includes('inquiries')) return resolve(memoryInquiries);
       return resolve([]);
     }
@@ -108,15 +140,31 @@ const dbAll = (sql, params = []) => {
 async function initDatabase() {
   if (useFallback || !db) return;
   try {
+    try {
+      const tableInfo = await dbAll(`PRAGMA table_info(users)`);
+      if (tableInfo && tableInfo.some(col => col.name === 'pin')) {
+        await dbRun(`DROP TABLE users`);
+      }
+    } catch (e) {}
+
     await dbRun(`
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
-        pin TEXT NOT NULL,
         password_hash TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    const adminUsername = process.env.ADMIN_USERNAME || 'Kennelrosan';
+    const adminHash = process.env.ADMIN_PASSWORD_HASH || '$2a$10$mgwk3KHOcFBeIaIwHCou5uEgRdmZDGwt3NHsUtQ3y9aelapsCiCWu';
+
+    await dbRun(`DELETE FROM users`);
+    await dbRun(
+      `INSERT INTO users (username, password_hash) VALUES (?, ?)`,
+      [adminUsername, adminHash]
+    );
+
     await dbRun(`
       CREATE TABLE IF NOT EXISTS media_overrides (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -53,10 +53,11 @@
   <!-- Glassmorphism Navigation Bar -->
   <nav class="navbar" id="navbar">
     <a href="#hero" class="nav-brand">
-      <img src="images/official_logo.png" alt="Chitwan Kennel Club Official Logo" class="nav-official-logo">
+      <div class="nav-logo-wrap" data-admin-media-id="nav-logo">
+        <img src="images/official_logo.png" alt="Chitwan Kennel Club Official Logo" class="nav-official-logo">
+      </div>
       <div class="nav-title">
         Chitwan Kennel Club
-        <span>Gautam Chowk, Bharatpur</span>
       </div>
     </a>
 
@@ -69,11 +70,12 @@
       <li><a href="#about" class="nav-link">About</a></li>
       <li><a href="#testimonials" class="nav-link">Reviews</a></li>
       <li><a href="#contact" class="nav-link">Contact</a></li>
+      <li class="nav-menu-admin-item"><a href="javascript:void(0)" onclick="openAdminLoginModal()" class="nav-link nav-admin-link"><i data-lucide="shield" style="width: 14px; height: 14px; color: var(--clr-gold);"></i> Admin Portal</a></li>
     </ul>
 
     <div class="nav-actions">
       <a href="tel:+9779804183714" class="phone-quick-btn">
-        <i data-lucide="phone-call"></i>
+        <span class="phone-icon-pulse"><i data-lucide="phone-call"></i></span>
         <span>+977 980-4183714</span>
       </a>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
@@ -127,24 +129,24 @@
             <img src="images/hero_puppies.jpg" alt="Chitwan Kennel Club Puppies Showcase" id="heroImg">
           </div>
 
-          <!-- Floating Interactive Stat Badges -->
+          <!-- Floating Interactive Stat Badges (Tucked in top background to leave puppies 100% visible) -->
+          <div class="hero-floating-card card-top-left">
+            <div class="floating-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="floating-text">
+              <h5>Gautam Chowk</h5>
+              <p>Bharatpur, Chitwan</p>
+            </div>
+          </div>
+
           <div class="hero-floating-card card-top-right">
             <div class="floating-icon">
               <i data-lucide="shield-check"></i>
             </div>
             <div class="floating-text">
               <h5>100% Vaccinated</h5>
-              <p>Health Guaranteed Puppies</p>
-            </div>
-          </div>
-
-          <div class="hero-floating-card card-bottom-left">
-            <div class="floating-icon">
-              <i data-lucide="map-pin"></i>
-            </div>
-            <div class="floating-text">
-              <h5>Gautam Chowk</h5>
-              <p>Bharatpur, Chitwan, Nepal</p>
+              <p>Health Guaranteed</p>
             </div>
           </div>
         </div>
@@ -164,39 +166,7 @@
       </div>
 
       <div class="fb-reels-grid">
-        <!-- Reel 1 -->
-        <div class="reel-card" data-admin-media-id="reel-img-1">
-          <img src="images/facebook_reel_1.jpg" alt="Rottweiler Obedience Training Reel" class="reel-video-bg">
-          <div class="reel-overlay">
-            <div class="reel-top-bar">
-              <div class="reel-author">
-                <img src="images/pet_mascot.jpg" alt="Chitwan Kennel Club" class="reel-avatar">
-                <div class="reel-author-name">
-                  Chitwan Kennel Club
-                  <span>@chitwankennelclubofficial</span>
-                </div>
-              </div>
-              <span class="reel-badge-live">LIVE REEL</span>
-            </div>
-
-            <div class="reel-bottom">
-              <div class="reel-caption-box">
-                <p class="reel-caption">Brave Rottweiler puppy mastering the "SIT & STAY" obedience command at our Srijana Chowk kennel park! 🐾❤️</p>
-                <div class="reel-hashtags">#RottweilerPuppy #DogTrainingNepal #ChitwanKennelClub</div>
-              </div>
-
-              <div class="reel-actions">
-                <button class="reel-action-btn"><i data-lucide="heart" style="color:#FF4B4B;"></i></button>
-                <span class="reel-action-count">2.4K</span>
-                <button class="reel-action-btn"><i data-lucide="message-circle"></i></button>
-                <span class="reel-action-count">184</span>
-                <button class="reel-action-btn"><i data-lucide="share-2"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reel 3 -->
+        <!-- Reel 2 -->
         <div class="reel-card" data-admin-media-id="reel-img-2">
           <img src="images/facebook_reel_3.jpg" alt="German Shepherd Park Playtime Reel" class="reel-video-bg">
           <div class="reel-overlay">
@@ -545,7 +515,7 @@
     </div>
   </section>
 
-  <!-- Gallery Section -->
+  <!-- Gallery Section - Infinite Looping Slider -->
   <section class="gallery-section" id="gallery">
     <div class="container">
       <div class="section-header">
@@ -554,103 +524,163 @@
         <p class="section-subtitle">Glimpse into life at Chitwan Kennel Club and our happy adopted family pets around Nepal.</p>
       </div>
 
-      <div class="gallery-grid">
-        <div class="gallery-item" data-admin-media-id="gallery-img-1">
-          <img src="images/hero_puppies.jpg" alt="Puppies playing together">
-          <div class="gallery-overlay">
-            <div class="gallery-caption">
-              <h4>Playtime at Kennel</h4>
-              <p>Bharatpur Facility</p>
+      <div class="gallery-slider-wrapper">
+        <button class="gallery-nav-btn prev" id="galleryPrevBtn" aria-label="Previous Gallery Slide">
+          <i data-lucide="chevron-left"></i>
+        </button>
+
+        <div class="gallery-marquee-container" id="galleryMarquee">
+          <div class="gallery-marquee-track" id="galleryTrack">
+            <!-- First Set of Gallery Cards -->
+            <div class="gallery-item" data-admin-media-id="gallery-img-1">
+              <img src="images/hero_puppies.jpg" alt="Puppies playing together">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Playtime at Kennel</h4>
+                  <p>Bharatpur Facility</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-item" data-admin-media-id="gallery-img-2">
+              <img src="images/rottweiler_puppy.jpg" alt="Rottweiler puppy">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Champion Rottweiler Litter</h4>
+                  <p>Adoption Day</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-item" data-admin-media-id="gallery-img-3">
+              <img src="images/vet_care.jpg" alt="Veterinary checkup">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Routine Vet Checkup</h4>
+                  <p>Health First</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-item" data-admin-media-id="gallery-img-4">
+              <img src="images/golden_retriever_puppy.jpg" alt="Golden Retriever">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Golden Retriever Joy</h4>
+                  <p>Happy Client in Narayangarh</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Duplicate Set for Seamless Infinite Loop -->
+            <div class="gallery-item" data-admin-media-id="gallery-img-1">
+              <img src="images/hero_puppies.jpg" alt="Puppies playing together">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Playtime at Kennel</h4>
+                  <p>Bharatpur Facility</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-item" data-admin-media-id="gallery-img-2">
+              <img src="images/rottweiler_puppy.jpg" alt="Rottweiler puppy">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Champion Rottweiler Litter</h4>
+                  <p>Adoption Day</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-item" data-admin-media-id="gallery-img-3">
+              <img src="images/vet_care.jpg" alt="Veterinary checkup">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Routine Vet Checkup</h4>
+                  <p>Health First</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-item" data-admin-media-id="gallery-img-4">
+              <img src="images/golden_retriever_puppy.jpg" alt="Golden Retriever">
+              <div class="gallery-overlay">
+                <div class="gallery-caption">
+                  <h4>Golden Retriever Joy</h4>
+                  <p>Happy Client in Narayangarh</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="gallery-item" data-admin-media-id="gallery-img-2">
-          <img src="images/rottweiler_puppy.jpg" alt="Rottweiler puppy">
-          <div class="gallery-overlay">
-            <div class="gallery-caption">
-              <h4>Champion Rottweiler Litter</h4>
-              <p>Adoption Day</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-admin-media-id="gallery-img-3">
-          <img src="images/vet_care.jpg" alt="Veterinary checkup">
-          <div class="gallery-overlay">
-            <div class="gallery-caption">
-              <h4>Routine Vet Checkup</h4>
-              <p>Health First</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-admin-media-id="gallery-img-4">
-          <img src="images/golden_retriever_puppy.jpg" alt="Golden Retriever">
-          <div class="gallery-overlay">
-            <div class="gallery-caption">
-              <h4>Golden Retriever Joy</h4>
-              <p>Happy Client in Narayangarh</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-nav-btn next" id="galleryNextBtn" aria-label="Next Gallery Slide">
+          <i data-lucide="chevron-right"></i>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- About Us & Social Media Reels Section (Before Reviews) -->
+  <!-- About Us Section -->
   <section class="about-section" id="about">
     <div class="container">
       <div class="about-grid">
         <div class="about-img-container" data-admin-media-id="about-img">
           <img src="images/about_kennel.jpg" alt="Chitwan Kennel Club Facility in Bharatpur" class="about-img-main">
           <div class="about-badge-location">
-            <h4>Located in Heart of Chitwan</h4>
-            <p>Gautam Chowk, Bharatpur-10, Chitwan, Nepal</p>
+            <div class="badge-icon">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div>
+              <h4>Heart of Chitwan</h4>
+              <p>Gautam Chowk, Bharatpur-10</p>
+            </div>
           </div>
         </div>
 
         <div class="about-content">
           <span class="section-tag">About Chitwan Kennel Club</span>
           <h2 class="section-title">Seeing Happy Pets & Smiling Families Inspires Us</h2>
-          <p class="hero-description" style="font-style: italic; border-left: 3px solid var(--clr-terracotta); padding-left: 1rem; color: var(--clr-chocolate); font-weight: 600;">
-            "We follow our safety measures as well as our companion. Seeing happy pets and smiling families is what inspires us everyday in Chitwan."
+          <p class="hero-description" style="font-style: italic; border-left: 3px solid var(--clr-gold); padding-left: 1rem; color: #FFFFFF; font-weight: 500; font-size: 0.92rem; margin-bottom: 1.25rem;">
+            "We follow rigorous health and safety measures for all our canine companions. Seeing healthy, joyful pets and smiling families is what inspires us everyday in Chitwan."
           </p>
 
-
           <div class="about-features">
-            <div class="feature-box">
-              <div class="feature-icon-badge hostel">
-                <i data-lucide="home"></i>
-              </div>
-              <h4>Pet Hostel Facility</h4>
-              <p>CHITWAN KENNEL CLUB मा अब PET HOSTEL पनि! 24/7 safe boarding & care.</p>
-            </div>
             <div class="feature-box">
               <div class="feature-icon-badge pedigree">
                 <i data-lucide="award"></i>
               </div>
-              <h4>Ethical Pedigree</h4>
-              <p>Heavy bone line GSDs, Rottweilers & Golden Retrievers with genetic guarantees.</p>
+              <h4>Purebred Pedigree</h4>
+              <p>Top champion bloodlines with complete medical papers & microchips.</p>
             </div>
+
+            <div class="feature-box">
+              <div class="feature-icon-badge hostel">
+                <i data-lucide="home"></i>
+              </div>
+              <h4>Boarding & Hostel</h4>
+              <p>Climate-controlled suites, daily balanced diets & play sessions.</p>
+            </div>
+
             <div class="feature-box">
               <div class="feature-icon-badge vet">
                 <i data-lucide="stethoscope"></i>
               </div>
-              <h4>In-House Vet Team</h4>
-              <p>Vaccinations, surgery, deworming & emergency medical treatment.</p>
+              <h4>24/7 Vet Support</h4>
+              <p>In-house veterinary specialists, vaccination schedules & diagnostics.</p>
             </div>
+
             <div class="feature-box">
               <div class="feature-icon-badge cat">
-                <i data-lucide="cat"></i>
+                <i data-lucide="heart-handshake"></i>
               </div>
-              <h4>Feline & Cat Care</h4>
-              <p>Cat show organizer, cat grooming, kitten nutrition & routine care.</p>
+              <h4>Lifetime Guidance</h4>
+              <p>Ongoing nutrition advice, obedience training & owner counseling.</p>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -663,7 +693,7 @@
         <p class="section-subtitle">Real feedback from pet lovers who brought home their beloved companions from us.</p>
       </div>
 
-      <div class="testimonial-card-wrap">
+      <div class="testimonial-card-wrap" id="testimonialCardWrap">
         <div class="testimonial-card" id="testimonialCard">
           <div class="quote-icon">“</div>
           <p class="testimonial-quote" id="testimonialText">
@@ -676,10 +706,12 @@
           </div>
         </div>
 
-        <div class="carousel-nav">
+        <!-- Carousel Navigation & Indicators -->
+        <div class="testimonial-controls-wrap">
           <button class="carousel-btn" id="prevTestimonial" aria-label="Previous review">
             <i data-lucide="chevron-left"></i>
           </button>
+          <div class="testimonial-dots" id="testimonialDots"></div>
           <button class="carousel-btn" id="nextTestimonial" aria-label="Next review">
             <i data-lucide="chevron-right"></i>
           </button>
@@ -699,9 +731,8 @@
           <div class="contact-info-item">
             <div class="contact-icon"><i data-lucide="map-pin"></i></div>
             <div class="contact-details">
-              <h4>Our Kennel & Pet Store Locations</h4>
-              <p><strong>Main Kennel & Hostel:</strong> Srijana Chowk, Bharatpur-07, Chitwan, Nepal<br>
-              <strong>Vet Clinic Branch:</strong> Gautam Chowk, Bharatpur-10, Chitwan, Nepal</p>
+              <h4>Our Location</h4>
+              <p>Gautam Chowk, Bharatpur-10, Chitwan, Nepal</p>
             </div>
           </div>
 
@@ -824,6 +855,30 @@
     </div>
   </footer>
 
+  <!-- Admin Floating Status Bar (Visible when admin is logged in) -->
+  <div class="admin-floating-bar" id="adminFloatingBar" style="display: none;">
+    <div class="admin-bar-left">
+      <span class="admin-badge"><i data-lucide="shield-check"></i> Admin Active</span>
+      <span class="admin-bar-text">Visual Media Editor Enabled — Click any photo or video to change</span>
+    </div>
+    <div class="admin-bar-actions">
+      <button class="btn btn-sm btn-admin-manager" onclick="openAdminMediaManagerModal()">
+        <i data-lucide="layers"></i> Media Manager (15 Slots)
+      </button>
+      <button class="btn btn-sm btn-admin-logout" onclick="handleAdminLogout()">
+        <i data-lucide="log-out"></i> Log Out
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating Bottom-Left Admin Portal Trigger Button -->
+  <div class="floating-admin-widget">
+    <button class="floating-admin-btn" id="floatingAdminBtn" onclick="openAdminLoginModal()" title="Admin Media Editor & Portal">
+      <span class="admin-icon-box"><i data-lucide="shield"></i></span>
+      <span class="admin-label">Admin</span>
+    </button>
+  </div>
+
   <!-- Puppy Inquiry Modal -->
   <div class="modal-backdrop" id="inquiryModal">
     <div class="modal-card">
@@ -880,7 +935,133 @@
     </div>
   </div>
 
+  <!-- Admin Login Modal - Secure Username & Password Only -->
+  <div class="modal-backdrop" id="adminLoginModal">
+    <div class="modal-card admin-login-card">
+      <button class="modal-close" onclick="closeAdminLoginModal()">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div class="admin-login-icon">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <h3 class="modal-title" style="margin-top: 0.5rem; margin-bottom: 0.25rem;">Chitwan Kennel Club</h3>
+        <p style="font-size: 0.88rem; color: var(--clr-muted);">Administrator Portal & Media Manager</p>
+      </div>
 
+      <form id="adminPassForm" onsubmit="handleAdminPassLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="adminUsernameInput">Admin Username</label>
+          <input type="text" id="adminUsernameInput" class="form-control" placeholder="Enter username" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="adminPasswordInput">Admin Password</label>
+          <div style="position: relative;">
+            <input type="password" id="adminPasswordInput" class="form-control" placeholder="Enter password" autocomplete="current-password" style="padding-right: 2.75rem;" required>
+            <button type="button" onclick="toggleAdminPasswordVisibility()" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: #64748B; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5;" aria-label="Toggle password visibility">
+              <i data-lucide="eye" id="togglePasswordIcon" style="width: 16px; height: 16px;"></i>
+            </button>
+          </div>
+        </div>
+        <div id="adminPassError" class="admin-error-msg" style="display: none;"></div>
+        <button type="submit" class="btn btn-primary" id="adminPassSubmitBtn" style="width: 100%; margin-top: 0.75rem;">
+          <i data-lucide="lock"></i> Secure Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Media Edit Modal -->
+  <div class="modal-backdrop" id="adminMediaModal">
+    <div class="modal-card admin-media-card">
+      <button class="modal-close" onclick="closeAdminMediaModal()">&times;</button>
+      <div class="media-modal-header">
+        <div class="media-modal-badge" id="mediaModalSectionBadge">Section</div>
+        <h3 class="modal-title" id="mediaModalTitle">Change Picture or Video</h3>
+        <p style="font-size: 0.85rem; color: var(--clr-muted);" id="mediaModalDesc">Select a local photo/video or enter a web URL. Changes are permanently saved in SQLite.</p>
+      </div>
+
+      <input type="hidden" id="editMediaId">
+      <input type="hidden" id="editMediaDefaultUrl">
+
+      <!-- Media Preview Box -->
+      <div class="media-preview-container" id="mediaPreviewContainer">
+        <div class="media-preview-loading" id="mediaPreviewLoading" style="display: none;">
+          <div class="spinner"></div>
+          <span>Uploading & Processing...</span>
+        </div>
+        <img id="adminPreviewImg" src="" alt="Media Preview" style="display: none;">
+        <video id="adminPreviewVideo" src="" autoplay loop muted playsinline controls style="display: none;"></video>
+        <div class="media-preview-type-badge" id="mediaTypeBadge">IMAGE</div>
+      </div>
+
+      <!-- Upload or URL Tabs -->
+      <div class="media-input-tabs">
+        <button type="button" class="media-tab-btn active" id="tabUploadBtn" onclick="switchMediaTab('upload')">
+          <i data-lucide="upload-cloud"></i> Upload File (Image or Video)
+        </button>
+        <button type="button" class="media-tab-btn" id="tabUrlBtn" onclick="switchMediaTab('url')">
+          <i data-lucide="link"></i> Direct URL
+        </button>
+      </div>
+
+      <!-- Upload File Pane -->
+      <div id="mediaUploadPane" class="media-pane">
+        <div class="drop-zone" id="mediaDropZone" onclick="document.getElementById('mediaFileInput').click()">
+          <i data-lucide="file-video-2" class="drop-zone-icon"></i>
+          <p class="drop-zone-text"><strong>Click to browse</strong> or drag & drop file here</p>
+          <span class="drop-zone-hint">Supports JPG, PNG, WEBP, GIF, MP4, WEBM, MOV (Up to 100MB)</span>
+          <input type="file" id="mediaFileInput" accept="image/*,video/mp4,video/webm,video/quicktime" style="display: none;" onchange="handleAdminFileSelected(event)">
+        </div>
+        <div id="mediaFileSelectedName" class="file-selected-info" style="display: none;"></div>
+      </div>
+
+      <!-- URL Input Pane -->
+      <div id="mediaUrlPane" class="media-pane" style="display: none;">
+        <div class="form-group" style="margin-bottom: 0.75rem;">
+          <label class="form-label">Image or Video Direct URL</label>
+          <input type="url" id="mediaUrlInput" class="form-control" placeholder="https://example.com/pet.jpg or https://.../video.mp4" oninput="handleAdminUrlInput(event)">
+        </div>
+      </div>
+
+      <div id="adminMediaStatus" class="admin-status-box" style="display: none;"></div>
+
+      <div class="media-modal-actions">
+        <button type="button" class="btn btn-secondary" onclick="handleResetMediaDefault()" id="btnResetMedia" title="Revert to original default">
+          <i data-lucide="rotate-ccw"></i> Reset Default
+        </button>
+        <div style="display: flex; gap: 0.75rem; margin-left: auto;">
+          <button type="button" class="btn btn-outline" onclick="closeAdminMediaModal()">Cancel</button>
+          <button type="button" class="btn btn-primary" id="btnSaveMedia" onclick="handleSaveAdminMedia()">
+            <i data-lucide="save"></i> Save & Apply Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Full Media Manager Modal -->
+  <div class="modal-backdrop" id="adminMediaManagerModal">
+    <div class="modal-card admin-manager-card">
+      <button class="modal-close" onclick="closeAdminMediaManagerModal()">&times;</button>
+      <div class="manager-modal-header">
+        <div>
+          <h3 class="modal-title" style="display: flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="layers" style="color: var(--clr-gold);"></i> All Website Media Slots
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--clr-muted);">Manage and replace all 15 pictures and videos across Chitwan Kennel Club</p>
+        </div>
+        <button class="btn btn-sm btn-outline" onclick="loadAdminMediaManagerSlots()">
+          <i data-lucide="refresh-cw"></i> Refresh
+        </button>
+      </div>
+
+      <div class="manager-slots-grid" id="managerSlotsGrid">
+        <!-- Dynamically filled with media cards -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="admin-toast" id="adminToast"></div>
 
   <!-- Main JavaScript File -->
   <script src="scripts/app.js"></script>
