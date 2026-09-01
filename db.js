@@ -23,28 +23,18 @@ if (fs.existsSync(envPath)) {
 let db = null;
 let useFallback = false;
 
-const isVercel = process.env.VERCEL || process.env.NOW_BUILDER;
+const isVercel = Boolean(process.env.VERCEL || process.env.NOW_BUILDER || process.env.AWS_LAMBDA_FUNCTION_NAME);
 const dataDir = isVercel ? '/tmp' : path.join(__dirname, 'data');
-const uploadsDir = isVercel ? '/tmp' : path.join(__dirname, 'uploads');
+const uploadsDir = isVercel ? '/tmp/uploads' : path.join(__dirname, 'uploads');
+const stateFilePath = path.join(isVercel ? '/tmp' : path.join(__dirname, 'data'), 'ckc_state.json');
 
 try {
   if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+} catch (e) {}
 
-  const sqlite3 = require('sqlite3').verbose();
-  const dbPath = path.join(dataDir, 'ckc.sqlite');
-  db = new sqlite3.Database(dbPath, (err) => {
-    if (err) {
-      console.error('SQLite connection error, switching to fallback mode:', err.message);
-      useFallback = true;
-    } else {
-      console.log('Connected to SQLite database at:', dbPath);
-    }
-  });
-} catch (e) {
-  console.warn('SQLite3 native module unavailable on Vercel environment. Using in-memory fallback store:', e.message);
-  useFallback = true;
-}
+try {
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+} catch (e) {}
 
 const defaultPuppies = [
   { id: 1, puppy_id: '1', name: 'Rottweiler', breed: 'Rottweiler', gender: 'Male & Female', category: 'guard large', age: '8 Weeks Old', tag: 'Champion Bloodline', specs: 'Dewormed, 1st Vet Shot, KCI Registered', desc: 'Loyal, highly trainable, powerful guard dog with confident temperament.', status: 'Available in Kennel', image_url: 'images/rottweiler_puppy.jpg' },
@@ -56,14 +46,56 @@ const defaultPuppies = [
 ];
 
 const defaultTestimonials = [
-  { id: 1, quote: "I got my Rottweiler puppy from Chitwan Kennel Club 6 months ago. The puppy arrived healthy, fully vaccinated, and extremely well-socialized. Dr. Kamala and the team at Gautam Chowk are always available whenever I need advice!", author: "Sujan Shrestha", location: "Bharatpur-10, Chitwan" },
+  { id: 1, quote: "I got my Rottweiler puppy from Chitwan Kennel Club 6 months ago. The puppy arrived healthy, fully vaccinated, and extremely well-socialized. Dr. Kamala and the team at Srijana Chowk are always available whenever I need advice!", author: "Sujan Shrestha", location: "Srijana Chowk, Bharatpur 44200" },
   { id: 2, quote: "The best veterinary clinic and kennel in Bharatpur! They performed minor ear care surgery on my German Shepherd with utmost precision and tender loving care. Highly recommend to all pet owners in Nepal.", author: "Aakriti Gurung", location: "Narayangarh, Chitwan" },
   { id: 3, quote: "Finding purebred, ethically raised Golden Retrievers in Nepal used to be tough. Chitwan Kennel Club provided full vaccination records, microchip details, and genuine care. My dog Bruno is the joy of our family!", author: "Rohan Pokharel", location: "Gaindakot, Nawalpur" },
   { id: 4, quote: "Outstanding boarding and dog training service! Left my Beagle for 10 days while traveling to Kathmandu, and he was returned clean, happy, and well-exercised.", author: "Deepak Karki", location: "Bharatpur-7, Chitwan" }
 ];
 
-const memoryInquiries = [];
-const memoryMedia = {};
+let memoryInquiries = [];
+let memoryMedia = {};
+let memoryPuppies = JSON.parse(JSON.stringify(defaultPuppies));
+
+// Load fallback state if stored on disk/tmp
+function loadFallbackState() {
+  try {
+    if (fs.existsSync(stateFilePath)) {
+      const data = JSON.parse(fs.readFileSync(stateFilePath, 'utf8'));
+      if (data.inquiries) memoryInquiries = data.inquiries;
+      if (data.media) memoryMedia = data.media;
+      if (data.puppies) memoryPuppies = data.puppies;
+    }
+  } catch (e) {}
+}
+
+function saveFallbackState() {
+  try {
+    fs.writeFileSync(stateFilePath, JSON.stringify({
+      inquiries: memoryInquiries,
+      media: memoryMedia,
+      puppies: memoryPuppies
+    }, null, 2));
+  } catch (e) {}
+}
+
+loadFallbackState();
+
+// SQLite Connection Attempt
+try {
+  const sqlite3 = require('sqlite3').verbose();
+  const dbPath = path.join(dataDir, 'ckc.sqlite');
+  db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+      console.warn('SQLite connection notice, using high-speed serverless store:', err.message);
+      useFallback = true;
+    } else {
+      console.log('Connected to SQLite database at:', dbPath);
+    }
+  });
+} catch (e) {
+  console.warn('SQLite native module unavailable in serverless environment. Using persistent JSON store.');
+  useFallback = true;
+}
 
 // Async wrapper helpers
 const dbRun = (sql, params = []) => {
@@ -72,21 +104,41 @@ const dbRun = (sql, params = []) => {
       if (sql.includes('INSERT INTO inquiries')) {
         memoryInquiries.push({
           id: memoryInquiries.length + 1,
-          type: params[0],
-          name: params[1],
-          phone: params[2],
-          email: params[3],
-          subject: params[4],
-          message: params[5],
-          status: 'New'
+          type: params[0] || 'inquiry',
+          name: params[1] || 'Anonymous',
+          phone: params[2] || '',
+          email: params[3] || '',
+          subject: params[4] || '',
+          message: params[5] || '',
+          status: 'New',
+          created_at: new Date().toISOString()
         });
+        saveFallbackState();
       } else if (sql.includes('media_overrides')) {
         if (params && params.length >= 2) {
-          memoryMedia[params[0]] = { media_id: params[0], url: params[1], media_type: params[2] || 'image' };
+          memoryMedia[params[0]] = {
+            media_id: params[0],
+            url: params[1],
+            media_type: params[2] || 'image',
+            updated_at: new Date().toISOString()
+          };
+          saveFallbackState();
+        }
+      } else if (sql.includes('DELETE FROM media_overrides')) {
+        if (params && params.length >= 1) {
+          delete memoryMedia[params[0]];
+          saveFallbackState();
+        }
+      } else if (sql.includes('UPDATE puppies')) {
+        const puppy = memoryPuppies.find(p => String(p.puppy_id) === String(params[1]) || String(p.id) === String(params[2]));
+        if (puppy) {
+          puppy.image_url = params[0];
+          saveFallbackState();
         }
       }
       return resolve({ lastID: Date.now(), changes: 1 });
     }
+
     db.run(sql, params, function (err) {
       if (err) {
         console.error('dbRun error:', err.message, 'SQL:', sql);
@@ -107,7 +159,7 @@ const dbGet = (sql, params = []) => {
         if (params && params[0] && params[0] !== adminUser) return resolve(null);
         return resolve({ id: 1, username: adminUser, password_hash: adminPassHash });
       }
-      if (sql.includes('COUNT')) return resolve({ count: 6 });
+      if (sql.includes('COUNT')) return resolve({ count: memoryPuppies.length });
       return resolve(null);
     }
     db.get(sql, params, (err, row) => {
@@ -120,7 +172,7 @@ const dbGet = (sql, params = []) => {
 const dbAll = (sql, params = []) => {
   return new Promise((resolve, reject) => {
     if (useFallback || !db) {
-      if (sql.includes('puppies')) return resolve(defaultPuppies);
+      if (sql.includes('puppies')) return resolve(memoryPuppies);
       if (sql.includes('testimonials')) return resolve(defaultTestimonials);
       if (sql.includes('media_overrides')) return resolve(Object.values(memoryMedia));
       if (sql.includes('inquiries')) return resolve(memoryInquiries);
@@ -128,7 +180,7 @@ const dbAll = (sql, params = []) => {
     }
     db.all(sql, params, (err, rows) => {
       if (err || !rows) {
-        if (sql.includes('puppies')) return resolve(defaultPuppies);
+        if (sql.includes('puppies')) return resolve(memoryPuppies);
         if (sql.includes('testimonials')) return resolve(defaultTestimonials);
         return resolve([]);
       }
@@ -174,6 +226,7 @@ async function initDatabase() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
     await dbRun(`
       CREATE TABLE IF NOT EXISTS puppies (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

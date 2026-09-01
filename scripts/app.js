@@ -264,9 +264,9 @@ function initPuppyFilters() {
  * ========================================== */
 let testimonials = [
   {
-    quote: "I got my Rottweiler puppy from Chitwan Kennel Club 6 months ago. The puppy arrived healthy, fully vaccinated, and extremely well-socialized. Dr. Kamala and the team at Gautam Chowk are always available whenever I need advice!",
+    quote: "I got my Rottweiler puppy from Chitwan Kennel Club 6 months ago. The puppy arrived healthy, fully vaccinated, and extremely well-socialized. Dr. Kamala and the team at Srijana Chowk are always available whenever I need advice!",
     author: "Sujan Shrestha",
-    location: "Bharatpur-10, Chitwan"
+    location: "Srijana Chowk, Bharatpur 44200"
   },
   {
     quote: "The best veterinary clinic and kennel in Bharatpur! They performed minor ear care surgery on my German Shepherd with utmost precision and tender loving care. Highly recommend to all pet owners in Nepal.",
@@ -1319,9 +1319,9 @@ function initTestimonialsCarousel() {
 
   const defaultReviews = [
     {
-      quote: "I got my Rottweiler puppy from Chitwan Kennel Club 6 months ago. The puppy arrived healthy, fully vaccinated, and extremely well-socialized. Dr. Kamala and the team at Gautam Chowk are always available whenever I need advice!",
+      quote: "I got my Rottweiler puppy from Chitwan Kennel Club 6 months ago. The puppy arrived healthy, fully vaccinated, and extremely well-socialized. Dr. Kamala and the team at Srijana Chowk are always available whenever I need advice!",
       author: "Sujan Shrestha",
-      location: "Bharatpur-10, Chitwan"
+      location: "Srijana Chowk, Bharatpur 44200"
     },
     {
       quote: "The best veterinary clinic and kennel in Bharatpur! They performed minor ear care surgery on my German Shepherd with utmost precision and tender loving care. Highly recommend to all pet owners in Nepal.",
