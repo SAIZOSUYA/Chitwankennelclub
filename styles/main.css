@@ -2129,8 +2129,10 @@ html, body {
 }
 
 /* ==========================================
- * Desktop Single-Page Viewport Rules (min-width: 992px)
+ * COMPREHENSIVE RESPONSIVE DESIGN SYSTEM (ALL DEVICES)
  * ========================================== */
+
+/* Desktop & Large Screens (min-width: 992px) */
 @media (min-width: 992px) {
   .hero,
   .about-section,
@@ -2140,41 +2142,76 @@ html, body {
   .gallery-section,
   .testimonials-section,
   .contact-section {
-    min-height: 100vh;
+    min-height: min-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 4.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: clamp(4.5rem, 8vh, 6rem);
+    padding-bottom: clamp(2rem, 4vh, 3.5rem);
     box-sizing: border-box;
   }
 
   .hero {
-    height: 100vh;
-    padding-top: 4.5rem;
-    padding-bottom: 1rem;
-    overflow: hidden;
+    min-height: 100vh;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
   }
 }
 
-/* 1. Large Screen & Laptops (max-width: 1200px) */
-@media (max-width: 1200px) {
+/* 1. Large Laptops & Standard Desktops (1201px - 1440px) */
+@media (max-width: 1440px) {
+  .container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+  }
+
   .hero-grid {
-    grid-template-columns: 1.05fr 0.95fr;
+    gap: 2rem;
+  }
+}
+
+/* 2. Laptops & Small Desktops (1081px - 1200px) */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1040px;
+    padding: 0 1.25rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
     gap: 1.75rem;
   }
 
   .nav-link {
-    padding: 0.35rem 0.65rem;
+    padding: 0.32rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .phone-quick-btn {
+    padding: 0.42rem 0.85rem;
     font-size: 0.8rem;
   }
 
   .hero-title {
-    font-size: 2.4rem;
+    font-size: clamp(2rem, 2.7vw, 2.5rem);
+  }
+
+  .hero-img-wrapper {
+    height: clamp(300px, 42vh, 380px);
+  }
+
+  .puppies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.15rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 1.5rem;
   }
 }
 
-/* 2. Tablets & Small Laptops (max-width: 1080px) */
+/* 3. Tablets in Landscape & Small Laptops (992px - 1080px) */
 @media (max-width: 1080px) {
   .mobile-toggle {
     display: flex;
@@ -2189,42 +2226,48 @@ html, body {
 
   .nav-menu {
     position: fixed;
-    top: 4.8rem;
+    top: 4.6rem;
     left: 1rem;
     right: 1rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
-    padding: 1.25rem 1rem;
+    padding: 1.15rem 1rem;
     border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.08);
     flex-direction: column;
-    gap: 0.4rem;
-    transform: translateY(-20px);
+    gap: 0.35rem;
+    transform: translateY(-20px) scale(0.98);
     opacity: 0;
     pointer-events: none;
-    transition: var(--tr-smooth);
+    transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
     border: 1px solid rgba(255, 255, 255, 0.9);
-    z-index: 999;
+    z-index: 1001;
   }
 
   .nav-menu.active {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
     pointer-events: all;
   }
 
   .nav-link {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--clr-chocolate);
     width: 100%;
     text-align: left;
     padding: 0.65rem 1rem;
-    border-radius: 16px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .nav-link:hover {
-    background: rgba(15, 23, 42, 0.08);
+    background: rgba(15, 23, 42, 0.06);
+    color: #0F172A;
   }
 
   .nav-link.active {
@@ -2233,9 +2276,47 @@ html, body {
     border: 1px solid rgba(254, 240, 138, 0.25);
   }
 
-  .hero-grid, .about-grid, .contact-grid {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+/* 4. Tablets in Portrait & Compact Screens (769px - 991px) */
+@media (max-width: 991px) {
+  .hero {
+    min-height: auto;
+    padding-top: 6rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .about-section,
+  .puppies-section,
+  .services-section,
+  .fb-reels-section,
+  .gallery-section,
+  .testimonials-section,
+  .contact-section {
+    min-height: auto;
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-grid,
+  .about-grid,
+  .contact-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.25rem;
   }
 
   .hero-content {
@@ -2244,11 +2325,16 @@ html, body {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
   }
 
   .hero-title span::after {
     display: none;
+  }
+
+  .hero-description {
+    max-width: 600px;
   }
 
   .hero-ctas {
@@ -2256,114 +2342,91 @@ html, body {
   }
 
   .hero-stats {
-    justify-content: center;
-  }
-
-  .hero-title {
-    font-size: 2.5rem;
+    max-width: 600px;
+    margin: 1rem auto 0 auto;
   }
 
   .hero-img-wrapper {
-    max-width: min(100%, 480px);
-    height: clamp(280px, 40vh, 350px);
-    aspect-ratio: auto;
+    max-width: min(100%, 540px);
+    height: clamp(280px, 42vh, 380px);
+    margin: 0 auto;
   }
 
-  .hero-img-wrapper img {
-    height: 100%;
-    object-position: center 60%;
+  .about-img-main {
+    height: 340px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: block;
   }
 
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+  .about-img-container {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
   }
 
-  .puppies-grid, .services-grid, .fb-reels-grid, .gallery-grid {
+  .puppies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+  }
+
+  .fb-reels-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .fb-cta-box {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .fb-cta-box h3,
+  .fb-cta-box p {
+    text-align: center;
+  }
 }
 
-/* 3. Tablets Portrait & Large Mobile (max-width: 768px) */
+/* 5. Phablets & Mobile Landscape (581px - 768px) */
 @media (max-width: 768px) {
   .container {
     padding: 0 1rem;
-    box-sizing: border-box;
     width: 100%;
   }
 
   .navbar {
-    top: 0.75rem;
-    width: calc(100% - 1.5rem);
-    padding: 0.4rem 0.9rem;
-    border-radius: 50px;
+    top: 0.65rem;
+    width: calc(100% - 1.25rem);
+    padding: 0.38rem 0.85rem;
+    border-radius: 40px;
   }
 
   .nav-logo-wrap {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
 
   .nav-title {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
   }
 
   .hero {
-    padding-top: 6.5rem;
-    padding-bottom: 3.5rem;
-    min-height: auto;
-    width: 100%;
-    box-sizing: border-box;
+    padding-top: 5.8rem;
+    padding-bottom: 3rem;
   }
 
   .hero-title {
-    font-size: 2.25rem;
+    font-size: clamp(1.95rem, 5.5vw, 2.4rem);
     line-height: 1.15;
-    word-break: break-word;
   }
 
   .hero-description {
-    font-size: 0.95rem;
-    max-width: 100%;
-  }
-
-  .hero-ctas {
-    flex-direction: column;
-    width: 100%;
-    gap: 0.75rem;
-  }
-
-  .hero-ctas .btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hero-img-wrapper {
-    max-width: 100%;
-    height: clamp(250px, 36vh, 320px);
-    aspect-ratio: auto;
-  }
-
-  .hero-img-wrapper img {
-    height: 100%;
-    object-position: center 60%;
-  }
-
-  .hero-floating-card {
-    padding: 0.38rem 0.65rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-  }
-
-  .card-top-left {
-    top: 0.6rem;
-    left: 0.6rem;
-  }
-
-  .card-top-right {
-    top: 0.6rem;
-    right: 0.6rem;
+    font-size: 0.92rem;
   }
 
   .hero-stats {
@@ -2371,30 +2434,23 @@ html, body {
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
     width: 100%;
-    box-sizing: border-box;
   }
 
   .hero-stat-card {
-    min-width: 0;
-    padding: 0.65rem 0.35rem;
+    padding: 0.55rem 0.35rem;
     border-radius: 14px;
   }
 
   .hero-stat-number {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
 
   .hero-stat-label {
     font-size: 0.68rem;
-    line-height: 1.2;
   }
 
-  .section-title {
-    font-size: 1.85rem;
-  }
-
-  .section-subtitle {
-    font-size: 0.9rem;
+  .hero-img-wrapper {
+    height: clamp(260px, 38vh, 340px);
   }
 
   /* Horizontally scrollable category filters */
@@ -2417,76 +2473,89 @@ html, body {
 
   .filter-btn {
     flex-shrink: 0;
-    font-size: 0.8rem;
-    padding: 0.42rem 0.9rem;
+    font-size: 0.82rem;
+    padding: 0.42rem 0.95rem;
     white-space: nowrap;
   }
 
-  .puppies-grid, .services-grid, .fb-reels-grid, .gallery-grid {
+  .puppies-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   .puppy-card-img-wrap {
-    height: 220px;
+    height: 180px;
   }
 
-  .about-img-main {
-    height: 300px;
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
-  .contact-info-box, .contact-form-card, .testimonial-card {
-    padding: 1.5rem;
+  .fb-reels-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .reel-card {
+    height: 320px;
+  }
+
+  .about-features {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .contact-info-box,
+  .contact-form-card,
+  .testimonial-card {
+    padding: 1.35rem 1.25rem;
     border-radius: 20px;
   }
 
   .testimonial-quote {
-    font-size: 0.95rem;
+    font-size: 0.94rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
   }
 
   .floating-quick-widget {
-    bottom: 1.15rem;
-    right: 1.15rem;
+    bottom: 1.2rem;
+    right: 1.2rem;
   }
 
   .floating-chat-btn {
-    width: 46px;
-    height: 46px;
-    font-size: 1.2rem;
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
   }
 
   .floating-admin-widget {
-    bottom: 1.15rem;
-    left: 1.15rem;
+    bottom: 1.2rem;
+    left: 1.2rem;
   }
 
   .floating-admin-btn {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     border-radius: 50%;
     justify-content: center;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
   }
 
   .floating-admin-btn .admin-label {
     display: none;
   }
 
-  .floating-admin-btn .admin-icon-box {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-  }
-
   .admin-floating-bar {
     bottom: 1rem;
     width: calc(100% - 1.5rem);
-    padding: 0.45rem 0.85rem;
+    padding: 0.45rem 0.75rem;
     font-size: 0.78rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.6rem;
+    border-radius: 30px;
   }
 
   .admin-bar-text {
@@ -2498,31 +2567,28 @@ html, body {
     border-radius: 22px;
     max-width: 94vw;
   }
-
-  .admin-manager-card {
-    max-width: 95vw;
-  }
-
-  .manager-slots-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
 }
 
-/* 4. Compact Mobile Phones (max-width: 580px) */
+/* 6. Standard Mobile Phones (381px - 580px) */
 @media (max-width: 580px) {
   .container {
     padding: 0 0.85rem;
   }
 
   .navbar {
-    top: 0.6rem;
+    top: 0.55rem;
     width: calc(100% - 1rem);
-    padding: 0.35rem 0.75rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 35px;
+  }
+
+  .nav-logo-wrap {
+    width: 35px;
+    height: 35px;
   }
 
   .nav-title {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
   }
 
   .phone-quick-btn {
@@ -2537,59 +2603,191 @@ html, body {
     display: none;
   }
 
+  .mobile-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.15rem;
+  }
+
+  .hero {
+    padding-top: 5.2rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.28rem 0.75rem;
+  }
+
   .hero-title {
-    font-size: clamp(1.85rem, 8vw, 2.25rem);
+    font-size: clamp(1.75rem, 7.5vw, 2.2rem);
     word-break: break-word;
   }
 
   .hero-description {
-    font-size: 0.92rem;
-    line-height: 1.5;
+    font-size: 0.88rem;
+    line-height: 1.45;
   }
 
-  .hero-img-wrapper img {
-    height: 270px;
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
   }
 
   .hero-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
+    gap: 0.35rem;
     width: 100%;
   }
 
   .hero-stat-card {
     min-width: 0;
-    padding: 0.55rem 0.25rem;
+    padding: 0.5rem 0.25rem;
     border-radius: 12px;
   }
 
   .hero-stat-number {
-    font-size: 1.2rem;
+    font-size: clamp(1.1rem, 4vw, 1.35rem);
   }
 
   .hero-stat-label {
-    font-size: 0.64rem;
+    font-size: 0.62rem;
     line-height: 1.15;
   }
 
-  .puppies-grid, .services-grid, .fb-reels-grid, .gallery-grid {
+  .hero-img-wrapper {
+    height: clamp(230px, 34vh, 290px);
+    border-radius: 20px;
+  }
+
+  .hero-floating-card {
+    padding: 0.32rem 0.55rem;
+    border-radius: 12px;
+    font-size: 0.72rem;
+  }
+
+  .floating-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+  }
+
+  .floating-icon i {
+    width: 13px;
+    height: 13px;
+  }
+
+  .floating-text h5 {
+    font-size: 0.75rem;
+  }
+
+  .floating-text p {
+    font-size: 0.64rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 6vw, 1.85rem);
+  }
+
+  .section-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .about-img-main {
+    height: 250px;
+    border-radius: 20px;
+  }
+
+  .about-badge-location {
+    bottom: 0.75rem;
+    right: 0.75rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 14px;
+  }
+
+  .about-features {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 0.65rem;
+  }
+
+  .puppies-grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
   }
 
   .puppy-card-img-wrap {
-    height: 240px;
+    height: 220px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .fb-reels-grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .reel-card {
+    height: clamp(300px, 45vh, 360px);
+  }
+
+  .gallery-item {
+    flex: 0 0 240px;
+    width: 240px;
+    height: 180px;
+  }
+
+  .gallery-nav-btn {
+    display: none; /* Smooth touch drag on mobile */
+  }
+
+  .testimonial-card {
+    padding: 1.25rem 1.1rem;
+    min-height: auto;
+    border-radius: 20px;
+  }
+
+  .testimonial-quote {
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .contact-info-box,
+  .contact-form-card {
+    padding: 1.2rem 1.1rem;
+    border-radius: 18px;
+  }
+
+  .contact-title {
+    font-size: 1.35rem !important;
+  }
+
+  .map-wrapper {
+    height: 130px;
   }
 
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.75rem;
+  }
+
+  .footer-brand h3 {
+    font-size: 1.25rem;
   }
 
   .newsletter-input-group {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
 
   .newsletter-btn {
@@ -2603,8 +2801,32 @@ html, body {
     border-radius: 12px;
   }
 
-  .form-control, .newsletter-input, select, textarea {
+  .form-control,
+  .newsletter-input,
+  select,
+  textarea {
     font-size: 16px !important; /* Prevents auto-zoom on iOS safari */
+  }
+
+  .floating-quick-widget {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .floating-chat-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 1.2rem;
+  }
+
+  .floating-admin-widget {
+    bottom: 1rem;
+    left: 1rem;
+  }
+
+  .floating-admin-btn {
+    width: 38px;
+    height: 38px;
   }
 
   .manager-slots-grid {
@@ -2612,27 +2834,35 @@ html, body {
   }
 }
 
-/* 5. Ultra-Compact Mobile Screens (max-width: 380px) */
+/* 7. Ultra-Compact Mobile Screens (320px - 380px) */
 @media (max-width: 380px) {
   .nav-title {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .hero-title {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 
-  .hero-img-wrapper img {
-    height: 240px;
+  .hero-img-wrapper {
+    height: 210px;
   }
 
-  .card-top-right, .card-bottom-left {
-    display: none; /* Hide floating chips on ultra-narrow screens to keep focus on dog media */
+  .card-top-right,
+  .card-bottom-left {
+    display: none; /* Hide secondary chips on ultra-narrow screens to keep focus clean */
   }
 
   .btn {
-    font-size: 0.88rem;
-    padding: 0.65rem 1.15rem;
+    font-size: 0.84rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .hero-stat-card {
+    padding: 0.45rem 0.2rem;
   }
 
   .hero-stat-number {
@@ -2641,6 +2871,14 @@ html, body {
 
   .hero-stat-label {
     font-size: 0.58rem;
+  }
+
+  .puppy-card-img-wrap {
+    height: 190px;
+  }
+
+  .about-img-main {
+    height: 220px;
   }
 }
 
