@@ -802,7 +802,6 @@ function handleAdminPassLogin(e) {
   const errorBox = document.getElementById('adminPassError');
   const submitBtn = document.getElementById('adminPassSubmitBtn');
 
-  if (errorBox) errorBox.style.display = 'none';
   submitBtn.disabled = true;
   submitBtn.innerHTML = 'Authenticating...';
 
@@ -811,26 +810,20 @@ function handleAdminPassLogin(e) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password })
   })
-    .then(async res => {
-      let data = {};
-      try {
-        data = await res.json();
-      } catch (jsonErr) {
-        data = { success: false, error: 'Server returned an invalid response. Please retry in a few moments.' };
-      }
-
+    .then(res => res.json())
+    .then(data => {
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<i data-lucide="lock"></i> Secure Sign In';
       if (window.lucide) lucide.createIcons();
 
-      if (res.ok && data.success && data.token) {
+      if (data.success && data.token) {
         setAdminToken(data.token);
         closeAdminLoginModal();
         setAdminModeUI(true);
         showAdminToast('Welcome Administrator! Visual Media Editor is now active.');
       } else {
         if (errorBox) {
-          errorBox.textContent = data.error || 'Invalid username or password.';
+          errorBox.textContent = data.error || 'Invalid credentials.';
           errorBox.style.display = 'block';
         }
       }
@@ -840,7 +833,7 @@ function handleAdminPassLogin(e) {
       submitBtn.innerHTML = '<i data-lucide="lock"></i> Secure Sign In';
       if (window.lucide) lucide.createIcons();
       if (errorBox) {
-        errorBox.textContent = err.message || 'Connection error. Please check your network and try again.';
+        errorBox.textContent = 'Server connection error. Please try again.';
         errorBox.style.display = 'block';
       }
     });

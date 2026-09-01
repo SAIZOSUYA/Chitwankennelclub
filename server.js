@@ -30,7 +30,6 @@ const { dbRun, dbGet, dbAll } = require('./db');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'chitwan_kennel_club_secret_key_2026';
-const isVercel = Boolean(process.env.VERCEL || process.env.NOW_BUILDER || process.env.AWS_LAMBDA_FUNCTION_NAME);
 
 // Middleware
 app.use(cors());
@@ -38,12 +37,10 @@ app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 
 // Multer Storage for Uploads
-const uploadPath = isVercel ? '/tmp/uploads' : path.join(__dirname, 'uploads');
-try {
-  if (!fs.existsSync(uploadPath)) {
-    fs.mkdirSync(uploadPath, { recursive: true });
-  }
-} catch (e) {}
+const uploadPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -58,7 +55,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 100 * 1024 * 1024 } // 100MB max
+  limits: { fileSize: 100 * 1024 * 1024 } // 100MB max for high-res photos & videos
 });
 
 // Serve static directories
@@ -68,9 +65,6 @@ app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/videos', express.static(path.join(__dirname, 'videos')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-if (isVercel) {
-  app.use('/uploads', express.static('/tmp/uploads'));
-}
 
 // Auth Helper Middleware
 function verifyAdminToken(req, res, next) {
@@ -108,14 +102,14 @@ const defaultMediaSlots = [
 ];
 
 /* ==========================================
- * API ROUTER DEFINITION
+ * 1. ADMIN AUTHENTICATION ENDPOINTS
  * ========================================== */
-const apiRouter = express.Router();
 
-// 1. ADMIN AUTHENTICATION
-apiRouter.post('/admin/login', async (req, res) => {
+// Admin Login - Secure Username & Password
+app.post('/api/admin/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+
     if (!username || !password) {
       return res.status(400).json({ success: false, error: 'Please enter both username and password.' });
     }
@@ -146,29 +140,26 @@ apiRouter.post('/admin/login', async (req, res) => {
   }
 });
 
-apiRouter.get('/admin/verify', verifyAdminToken, (req, res) => {
+// Verify token session
+app.get('/api/admin/verify', verifyAdminToken, (req, res) => {
   res.json({ success: true, user: req.admin });
 });
 
-// 2. MEDIA UPLOAD & PERSISTENCE
-apiRouter.post('/admin/upload', verifyAdminToken, upload.single('file'), (req, res) => {
+/* ==========================================
+ * 2. MEDIA UPLOAD & PERSISTENCE ENDPOINTS
+ * ========================================== */
+
+// Upload a single file (image or video)
+app.post('/api/admin/upload', verifyAdminToken, upload.single('file'), (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, error: 'No media file provided.' });
     }
 
-    let relativeUrl = `uploads/${req.file.filename}`;
+    const relativeUrl = `uploads/${req.file.filename}`;
     const ext = path.extname(req.file.originalname).toLowerCase();
     const isVideo = ['.mp4', '.webm', '.mov', '.ogg', '.mkv'].includes(ext);
     const mediaType = isVideo ? 'video' : 'image';
-
-    if (isVercel && !isVideo) {
-      try {
-        const fileData = fs.readFileSync(req.file.path);
-        const mimeType = ext === '.png' ? 'image/png' : ext === '.webp' ? 'image/webp' : ext === '.svg' ? 'image/svg+xml' : 'image/jpeg';
-        relativeUrl = `data:${mimeType};base64,${fileData.toString('base64')}`;
-      } catch (e) {}
-    }
 
     res.json({
       success: true,
@@ -183,7 +174,8 @@ apiRouter.post('/admin/upload', verifyAdminToken, upload.single('file'), (req, r
   }
 });
 
-apiRouter.post('/admin/media', verifyAdminToken, async (req, res) => {
+// Save media override to Database
+app.post('/api/admin/media', verifyAdminToken, async (req, res) => {
   try {
     const { media_id, url, media_type } = req.body;
     if (!media_id || !url) {
@@ -193,6 +185,7 @@ apiRouter.post('/admin/media', verifyAdminToken, async (req, res) => {
     const isVideo = url.match(/\.(mp4|webm|mov|ogg|mkv)$/i) || media_type === 'video';
     const finalMediaType = isVideo ? 'video' : (media_type || 'image');
 
+    // Upsert into media_overrides
     await dbRun(
       `INSERT INTO media_overrides (media_id, url, media_type, updated_at)
        VALUES (?, ?, ?, CURRENT_TIMESTAMP)
@@ -203,6 +196,7 @@ apiRouter.post('/admin/media', verifyAdminToken, async (req, res) => {
       [media_id, url, finalMediaType]
     );
 
+    // If it's a puppy image/video, also update puppies table
     if (media_id.startsWith('puppy-img-')) {
       const puppyId = media_id.replace('puppy-img-', '');
       await dbRun(
@@ -224,7 +218,8 @@ apiRouter.post('/admin/media', verifyAdminToken, async (req, res) => {
   }
 });
 
-apiRouter.post('/admin/media/reset', verifyAdminToken, async (req, res) => {
+// Reset media override to original default
+app.post('/api/admin/media/reset', verifyAdminToken, async (req, res) => {
   try {
     const { media_id } = req.body;
     if (!media_id) {
@@ -254,15 +249,14 @@ apiRouter.post('/admin/media/reset', verifyAdminToken, async (req, res) => {
   }
 });
 
-apiRouter.get('/admin/media/list', verifyAdminToken, async (req, res) => {
+// List all media slots with their current override state for Admin Manager
+app.get('/api/admin/media/list', verifyAdminToken, async (req, res) => {
   try {
     const rows = await dbAll(`SELECT media_id, url, media_type, updated_at FROM media_overrides`);
     const overrideMap = {};
-    if (Array.isArray(rows)) {
-      rows.forEach(r => {
-        if (r && r.media_id) overrideMap[r.media_id] = r;
-      });
-    }
+    rows.forEach(r => {
+      overrideMap[r.media_id] = r;
+    });
 
     const slots = defaultMediaSlots.map(slot => {
       const override = overrideMap[slot.id];
@@ -282,24 +276,30 @@ apiRouter.get('/admin/media/list', verifyAdminToken, async (req, res) => {
   }
 });
 
-// 3. PUBLIC MEDIA & CONTENT ENDPOINTS
-apiRouter.get('/media', async (req, res) => {
+/* ==========================================
+ * 3. PUBLIC MEDIA & CONTENT ENDPOINTS
+ * ========================================== */
+
+// Get all active media overrides for frontend display
+app.get('/api/media', async (req, res) => {
   try {
     const rows = await dbAll(`SELECT media_id, url, media_type FROM media_overrides`);
     const mediaMap = {};
-    if (Array.isArray(rows)) {
-      rows.forEach(r => {
-        if (r && r.media_id && r.url) mediaMap[r.media_id] = r.url;
-      });
-    }
+    rows.forEach(r => {
+      mediaMap[r.media_id] = r.url;
+    });
     res.json({ success: true, media: mediaMap });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// 4. PUPPIES ENDPOINTS
-apiRouter.get('/puppies', async (req, res) => {
+/* ==========================================
+ * 4. PUPPIES ENDPOINTS
+ * ========================================== */
+
+// Get all puppies
+app.get('/api/puppies', async (req, res) => {
   try {
     const puppies = await dbAll(`SELECT * FROM puppies ORDER BY id ASC`);
     res.json({ success: true, puppies });
@@ -308,8 +308,12 @@ apiRouter.get('/puppies', async (req, res) => {
   }
 });
 
-// 5. INQUIRIES & BOOKINGS ENDPOINTS
-apiRouter.post('/inquiries', async (req, res) => {
+/* ==========================================
+ * 5. INQUIRIES & BOOKINGS ENDPOINTS
+ * ========================================== */
+
+// Submit Contact / Breed Inquiry / Service Booking / Newsletter
+app.post('/api/inquiries', async (req, res) => {
   try {
     const { type = 'inquiry', name, phone, email, subject, message } = req.body;
     if (!name && !email) {
@@ -329,17 +333,11 @@ apiRouter.post('/inquiries', async (req, res) => {
   }
 });
 
-apiRouter.get('/inquiries', verifyAdminToken, async (req, res) => {
-  try {
-    const inquiries = await dbAll(`SELECT * FROM inquiries ORDER BY id DESC`);
-    res.json({ success: true, inquiries });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
+/* ==========================================
+ * 6. TESTIMONIALS ENDPOINTS
+ * ========================================== */
 
-// 6. TESTIMONIALS ENDPOINTS
-apiRouter.get('/testimonials', async (req, res) => {
+app.get('/api/testimonials', async (req, res) => {
   try {
     const testimonials = await dbAll(`SELECT * FROM testimonials ORDER BY id ASC`);
     res.json({ success: true, testimonials });
@@ -348,17 +346,13 @@ apiRouter.get('/testimonials', async (req, res) => {
   }
 });
 
-// Mount router on both '/api' and '/' for complete path resolution compatibility
-app.use('/api', apiRouter);
-app.use(apiRouter);
-
 // Fallback route to serve main website index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start Express Server locally or export for Vercel
-if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`🐾 Chitwan Kennel Club Server running live at http://localhost:${PORT}`);
   });
