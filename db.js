@@ -155,7 +155,7 @@ const dbGet = (sql, params = []) => {
     if (useFallback || !db) {
       if (sql.includes('users')) {
         const adminUser = process.env.ADMIN_USERNAME || 'Kennelrosan';
-        const adminPassHash = process.env.ADMIN_PASSWORD_HASH || '$2a$10$mgwk3KHOcFBeIaIwHCou5uEgRdmZDGwt3NHsUtQ3y9aelapsCiCWu';
+        const adminPassHash = process.env.ADMIN_PASSWORD_HASH || '$2a$10$5jugWnspb3aCq0/cYM7/8OPlQmTC/DNhGEC8OjxRaoPQCEaynwAWC';
         if (params && params[0] && params[0] !== adminUser) return resolve(null);
         return resolve({ id: 1, username: adminUser, password_hash: adminPassHash });
       }
@@ -209,7 +209,7 @@ async function initDatabase() {
     `);
 
     const adminUsername = process.env.ADMIN_USERNAME || 'Kennelrosan';
-    const adminHash = process.env.ADMIN_PASSWORD_HASH || '$2a$10$mgwk3KHOcFBeIaIwHCou5uEgRdmZDGwt3NHsUtQ3y9aelapsCiCWu';
+    const adminHash = process.env.ADMIN_PASSWORD_HASH || '$2a$10$5jugWnspb3aCq0/cYM7/8OPlQmTC/DNhGEC8OjxRaoPQCEaynwAWC';
 
     await dbRun(`DELETE FROM users`);
     await dbRun(
